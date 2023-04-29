@@ -3,9 +3,47 @@ info:
   title: ''
   version: 0.0.0
 paths:
-  /api/api/schema/:
+  /api/brand/:
     get:
-      operationId: api_api_schema_retrieve
+      operationId: api_brand_list
+      description: A simple ViewSet for listing or retrieving Brand
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Brand'
+          description: ''
+  /api/category/:
+    get:
+      operationId: api_category_list
+      description: A simple ViewSet for listing or retrieving Category
+      tags:
+      - api
+      security:
+      - cookieAuth: []
+      - basicAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+          description: ''
+  /api/schema/:
+    get:
+      operationId: api_schema_retrieve
       description: |-
         OpenApi3 schema for this API. Format can be selected via content negotiation.
 
@@ -148,27 +186,32 @@ paths:
                 type: object
                 additionalProperties: {}
           description: ''
-  /api/category/:
-    get:
-      operationId: api_category_list
-      description: A simple ViewSet for listing or retrieving Category
-      tags:
-      - api
-      security:
-      - cookieAuth: []
-      - basicAuth: []
-      - {}
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Category'
-          description: ''
 components:
   schemas:
+    Brand:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+        is_active:
+          type: boolean
+        name:
+          type: string
+          maxLength: 100
+      required:
+      - created_at
+      - id
+      - name
+      - updated_at
     Category:
       type: object
       properties:
