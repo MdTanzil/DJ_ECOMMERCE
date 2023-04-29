@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from drf_spectacular.utils import extend_schema
 from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import *
@@ -14,6 +15,7 @@ class CatagoryViewSet(viewsets.ViewSet):
 
     queryset = Category.objects.all().order_by("-id")
 
+    @extend_schema(responses=CategorySerializer)
     def list(self, request):
         quaryset = self.queryset
         serializer = CategorySerializer(self.queryset, many=True)

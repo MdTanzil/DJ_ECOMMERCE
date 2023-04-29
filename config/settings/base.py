@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     #External Package
     'rest_framework',
     'mptt',
+    'drf_spectacular',
     #Internal Package
     'product'
 ]
@@ -119,3 +120,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+REST_FRAMEWORK = {
+    # YOUR SETTINGS
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
