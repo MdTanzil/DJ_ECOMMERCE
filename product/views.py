@@ -34,3 +34,16 @@ class BrandViewSet(viewsets.ViewSet):
         quaryset = self.queryset
         serializer = BrandSerializer(self.queryset, many=True)
         return Response(serializer.data)
+
+class ProductViewSet(viewsets.ViewSet):
+    """
+    A simple ViewSet for listing or retrieving Brand
+    """
+
+    queryset = Product.objects.all().order_by("-id")
+
+    @extend_schema(responses=ProductSerializer)
+    def list(self, request):
+        quaryset = self.queryset
+        serializer = ProductSerializer(self.queryset, many=True)
+        return Response(serializer.data)
