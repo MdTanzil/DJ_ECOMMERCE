@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 from .serializers import *
 from .models import Brand, Category, Product, ProductLine
+from rest_framework.decorators import action
 
 # Create your views here.
 
@@ -49,10 +50,20 @@ class ProductViewSet(viewsets.ViewSet):
         serializer = ProductSerializer(self.queryset, many=True)
         return Response(serializer.data)
 
+    @action(
+        methods=["get"],
+        detail=False,
+        url_path="category/(?P<category>\w+)/all",
+        url_name="all",
+    )
+    def list_product_by_catagory(self, request, category=None):
+        serializer = ProductSerializer(
+            self.queryset.filter(category__name=category), many=True
+        )
+        return Response(serializer.data)
+
 
 class ProductLineViewSet(viewsets.ViewSet):
-    
-    
     queryset = ProductLine.objects.all().order_by("-id")
 
     @extend_schema(responses=ProductLineSerializer)
